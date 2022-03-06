@@ -1,4 +1,5 @@
 using GeekShooping.ProductAPI.Model.Context;
+using GeekShooping.ProductAPI.Repository;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<ProductContext>(opt =>
 });
 
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 

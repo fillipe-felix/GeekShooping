@@ -8,5 +8,5 @@ public interface IProductRepository
     Task<ProductViewModel> FindById(string id);
     Task<ProductViewModel> Create(ProductViewModel viewModel);
     Task<ProductViewModel> Update(ProductViewModel viewModel);
-    Task<bool> Create(string id);
+    Task<bool> Delete(string id);
 }
