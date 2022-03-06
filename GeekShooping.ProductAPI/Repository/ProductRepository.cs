@@ -26,7 +26,7 @@ public class ProductRepository : IProductRepository
         return _mapper.Map<IEnumerable<ProductViewModel>>(product);
     }
 
-    public async Task<ProductViewModel> FindById(string id)
+    public async Task<ProductViewModel> FindById(Guid id)
     {
         var product = await _context
             .Products
@@ -36,9 +36,9 @@ public class ProductRepository : IProductRepository
         return _mapper.Map<ProductViewModel>(product);
     }
 
-    public async Task<ProductViewModel> Create(ProductViewModel viewModel)
+    public async Task<ProductViewModel> Create(ProductInputModel inputModel)
     {
-        var product = _mapper.Map<Product>(viewModel);
+        var product = _mapper.Map<Product>(inputModel);
 
         await _context.Products.AddAsync(product);
         await _context.SaveChangesAsync();
@@ -46,8 +46,9 @@ public class ProductRepository : IProductRepository
         return _mapper.Map<ProductViewModel>(product);
     }
 
-    public async Task<ProductViewModel> Update(ProductViewModel viewModel)
+    public async Task<ProductViewModel> Update(Guid id, ProductViewModel viewModel)
     {
+        viewModel.Id = id;
         var product = _mapper.Map<Product>(viewModel);
 
         _context.Products.Update(product);
@@ -56,7 +57,7 @@ public class ProductRepository : IProductRepository
         return _mapper.Map<ProductViewModel>(product);
     }
 
-    public async Task<bool> Delete(string id)
+    public async Task<bool> Delete(Guid id)
     {
         try
         {

@@ -1,8 +1,7 @@
 ﻿namespace GeekShooping.ProductAPI.Data.ViewModels;
 
-public class ProductViewModel
+public class ProductInputModel
 {
-    public Guid Id { get; set; }
     public string Name { get; set; }
     public decimal Price { get; set; }
     public string Description { get; set; }

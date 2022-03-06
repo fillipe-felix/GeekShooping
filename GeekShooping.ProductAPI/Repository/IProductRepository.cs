@@ -5,8 +5,8 @@ namespace GeekShooping.ProductAPI.Repository;
 public interface IProductRepository
 {
     Task<IEnumerable<ProductViewModel>> FindAll();
-    Task<ProductViewModel> FindById(string id);
-    Task<ProductViewModel> Create(ProductViewModel viewModel);
-    Task<ProductViewModel> Update(ProductViewModel viewModel);
-    Task<bool> Delete(string id);
+    Task<ProductViewModel> FindById(Guid id);
+    Task<ProductViewModel> Create(ProductInputModel inputModel);
+    Task<ProductViewModel> Update(Guid id, ProductViewModel viewModel);
+    Task<bool> Delete(Guid id);
 }

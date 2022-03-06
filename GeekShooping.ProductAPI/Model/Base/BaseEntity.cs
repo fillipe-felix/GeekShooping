@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GeekShooping.ProductAPI.Model.Base;
 
-public class BaseEntity
+public abstract class BaseEntity
 {
-    public BaseEntity()
+    protected BaseEntity()
     {
         Id = Guid.NewGuid();
     }

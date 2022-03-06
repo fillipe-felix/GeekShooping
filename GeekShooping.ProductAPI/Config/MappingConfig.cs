@@ -10,5 +10,6 @@ public class MappingConfig : Profile
     public MappingConfig()
     {
         CreateMap<ProductViewModel, Product>().ReverseMap();
+        CreateMap<ProductInputModel, Product>().ReverseMap();
     }
 }
