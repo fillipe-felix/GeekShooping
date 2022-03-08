@@ -42,7 +42,7 @@ public class ProductService : IProductService
 
     public async Task<ProductViewModel> UpdateProduct(Guid id, ProductViewModel viewModel)
     {
-        var response = await _client.PutAsJson(BasePath, viewModel);
+        var response = await _client.PutAsJson($"{BasePath}/{id}", viewModel);
 
         if (response.IsSuccessStatusCode)
         {
