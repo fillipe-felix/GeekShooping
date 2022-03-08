@@ -74,6 +74,6 @@ public class ProductController : ControllerBase
             return BadRequest();
         }
         
-        return Ok();
+        return Ok(status);
     }
 }
