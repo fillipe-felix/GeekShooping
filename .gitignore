@@ -270,4 +270,4 @@ __pycache__/
 **/**/healthchecksdb
 
 # VS config
-**/**/launchSettings.json
+#**/**/launchSettings.json

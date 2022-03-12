@@ -1,4 +1,5 @@
 ﻿using Duende.IdentityServer.Models;
+using Duende.IdentityServer;
 
 namespace GeekShooping.IdentityServer.Configuration;
 
@@ -34,6 +35,24 @@ public class IdentityConfiguration
             },
             AllowedGrantTypes = GrantTypes.ClientCredentials,
             AllowedScopes = { "read", "write", "profile" }
+        },
+        new Client
+        {
+            ClientId = "geek_shopping",
+            ClientSecrets =
+            {
+                new Secret("my_super_secret".Sha256()),
+            },
+            AllowedGrantTypes = GrantTypes.Code,
+            RedirectUris = { "http://localhost:34656/signin-oidc" },
+            PostLogoutRedirectUris = { "http://localhost:34656/signout-callback-iodc" },
+            AllowedScopes = new List<string>
+            {
+                IdentityServerConstants.StandardScopes.OpenId,
+                IdentityServerConstants.StandardScopes.Profile,
+                IdentityServerConstants.StandardScopes.Email,
+                "geek_shopping"
+            }
         }
     };
-}
+};
