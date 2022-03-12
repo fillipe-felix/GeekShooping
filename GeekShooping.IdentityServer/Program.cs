@@ -22,7 +22,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<IdentityServerContext>()
     .AddDefaultTokenProviders();
 
-var builderIdentityServer = builder.Services.AddIdentityServer(opt =>
+builder.Services.AddIdentityServer(opt =>
 {
     opt.Events.RaiseErrorEvents = true;
     opt.Events.RaiseInformationEvents = true;
@@ -30,10 +30,10 @@ var builderIdentityServer = builder.Services.AddIdentityServer(opt =>
     opt.Events.RaiseSuccessEvents = true;
     opt.EmitStaticAudienceClaim = true;
 }).AddInMemoryIdentityResources(IdentityConfiguration.IdentityResources)
+    .AddInMemoryApiScopes(IdentityConfiguration.ApiScopes)
     .AddInMemoryClients(IdentityConfiguration.Clients)
-    .AddAspNetIdentity<ApplicationUser>();
-
-builderIdentityServer.AddDeveloperSigningCredential();
+    .AddAspNetIdentity<ApplicationUser>()
+    .AddDeveloperSigningCredential();
 
 var app = builder.Build();
 
@@ -42,7 +42,7 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    //app.UseHsts();
 }
 
 app.UseHttpsRedirection();

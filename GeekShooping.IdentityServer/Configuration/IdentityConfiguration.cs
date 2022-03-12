@@ -1,12 +1,12 @@
-﻿using Duende.IdentityServer.Models;
-using Duende.IdentityServer;
+﻿using Duende.IdentityServer;
+using Duende.IdentityServer.Models;
 
 namespace GeekShooping.IdentityServer.Configuration;
 
 public class IdentityConfiguration
 {
     public const string Admin = "Admin";
-    public const string Customer = "Customer";
+    public const string Client = "Client";
 
     public static IEnumerable<IdentityResource> IdentityResources => new List<IdentityResource>
     {
@@ -17,11 +17,10 @@ public class IdentityConfiguration
 
     public static IEnumerable<ApiScope> ApiScopes => new List<ApiScope>
     {
-        new ApiScope("geek_shopping", "GeekShopping Server"),
+        new ApiScope("geek_shooping", "GeekShopping Server"),
         new ApiScope("read", "Read data."),
         new ApiScope("write", "Write data."),
-        new ApiScope("delete", "Delete data."),
-        new ApiScope("write", "Write data.")
+        new ApiScope("delete", "Delete data.")
     };
 
     public static IEnumerable<Client> Clients => new List<Client>
@@ -38,20 +37,20 @@ public class IdentityConfiguration
         },
         new Client
         {
-            ClientId = "geek_shopping",
+            ClientId = "geek_shooping",
             ClientSecrets =
             {
                 new Secret("my_super_secret".Sha256()),
             },
             AllowedGrantTypes = GrantTypes.Code,
-            RedirectUris = { "http://localhost:34656/signin-oidc" },
-            PostLogoutRedirectUris = { "http://localhost:34656/signout-callback-iodc" },
+            RedirectUris = { "http://localhost:5035/signin-oidc" },
+            PostLogoutRedirectUris = { "http://localhost:5035/signout-callback-oidc" },
             AllowedScopes = new List<string>
             {
                 IdentityServerConstants.StandardScopes.OpenId,
                 IdentityServerConstants.StandardScopes.Profile,
                 IdentityServerConstants.StandardScopes.Email,
-                "geek_shopping"
+                "geek_shooping"
             }
         }
     };
