@@ -1,4 +1,5 @@
 using GeekShooping.IdentityServer.Configuration;
+using GeekShooping.IdentityServer.Initializer;
 using GeekShooping.IdentityServer.Model;
 using GeekShooping.IdentityServer.Model.Context;
 
@@ -22,7 +23,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<IdentityServerContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddIdentityServer(opt =>
+var builderIdentitySrever = builder.Services.AddIdentityServer(opt =>
 {
     opt.Events.RaiseErrorEvents = true;
     opt.Events.RaiseInformationEvents = true;
@@ -32,10 +33,14 @@ builder.Services.AddIdentityServer(opt =>
 }).AddInMemoryIdentityResources(IdentityConfiguration.IdentityResources)
     .AddInMemoryApiScopes(IdentityConfiguration.ApiScopes)
     .AddInMemoryClients(IdentityConfiguration.Clients)
-    .AddAspNetIdentity<ApplicationUser>()
-    .AddDeveloperSigningCredential();
+    .AddAspNetIdentity<ApplicationUser>();
+
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
+builderIdentitySrever.AddDeveloperSigningCredential();
 
 var app = builder.Build();
+IDbInitializer dbInitializer = app.Services.CreateScope().ServiceProvider.GetService<IDbInitializer>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -51,6 +56,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthorization();
+
+dbInitializer.Initialize();
 
 app.MapControllerRoute(
     name: "default",
