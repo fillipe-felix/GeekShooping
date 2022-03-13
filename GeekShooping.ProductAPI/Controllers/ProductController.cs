@@ -1,6 +1,8 @@
 using GeekShooping.ProductAPI.Data.ViewModels;
 using GeekShooping.ProductAPI.Repository;
+using GeekShooping.ProductAPI.Utils;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeekShooping.ProductAPI.Controllers;
@@ -26,6 +28,7 @@ public class ProductController : ControllerBase
     }
     
     [HttpGet("{id:guid}")]
+    [Authorize]
     public async Task<IActionResult> GetById(Guid id)
     {
         var product = await _productRepository.FindById(id);
@@ -39,6 +42,7 @@ public class ProductController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] ProductInputModel inputModel)
     {
         if (inputModel == null)
@@ -52,6 +56,7 @@ public class ProductController : ControllerBase
     }
     
     [HttpPut("{id:guid}")]
+    [Authorize]
     public async Task<IActionResult> Update(Guid id, [FromBody] ProductViewModel viewModel)
     {
         if (viewModel == null)
@@ -65,6 +70,7 @@ public class ProductController : ControllerBase
     }
     
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = Role.Admin)]
     public async Task<IActionResult> Delete(Guid id)
     {
         var status = await _productRepository.Delete(id);
