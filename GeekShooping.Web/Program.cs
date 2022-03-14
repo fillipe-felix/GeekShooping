@@ -32,6 +32,8 @@ builder.Services.AddAuthentication(options =>
         options.TokenValidationParameters.RoleClaimType = "role";
         options.Scope.Add("geek_shooping");
         options.SaveTokens = true;
+
+        options.RequireHttpsMetadata = false;
     });
 
 var app = builder.Build();
@@ -44,7 +46,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
