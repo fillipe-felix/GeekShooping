@@ -2,6 +2,7 @@ using GeekShooping.Web.Services;
 using GeekShooping.Web.Services.Interfaces;
 
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,7 @@ builder.Services.AddAuthentication(options =>
 
         options.RequireHttpsMetadata = false;
     });
+IdentityModelEventSource.ShowPII = true;
 
 var app = builder.Build();
 
@@ -46,7 +48,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

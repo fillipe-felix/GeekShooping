@@ -20,6 +20,7 @@ builder.Services.AddDbContext<IdentityServerContext>(opt =>
 
 // Adicionando configurações de segurança do identity server
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    //.AddDefaultUI()
     .AddEntityFrameworkStores<IdentityServerContext>()
     .AddDefaultTokenProviders();
 
