@@ -1,6 +1,4 @@
-@page
 @using System.Reflection
-@model GeekShooping.IdentityServer.Views.Home.Index
 
 @{
     var version = typeof(Duende.IdentityServer.Hosting.IdentityServerMiddleware).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion.Split('+').First();
@@ -24,9 +22,6 @@
         </li>
         <li>
             Click <a href="~/grants">here</a> to manage your stored grants.
-        </li>
-        <li>
-            Click <a href="~/ciba/all">here</a> to view your pending CIBA login requests.
         </li>
         <li>
             Here are links to the
