@@ -15,12 +15,12 @@ namespace GeekShooping.IdentityServer.Services;
 public class ProfileService : IProfileService
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<ApplicationUser> _roleManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
 
 
     public ProfileService(UserManager<ApplicationUser> userManager, 
-                          RoleManager<ApplicationUser> roleManager, 
+                          RoleManager<IdentityRole> roleManager, 
                           IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory)
     {
         _userManager = userManager;
@@ -48,7 +48,7 @@ public class ProfileService : IProfileService
 
                 if (_roleManager.SupportsRoleClaims)
                 {
-                    ApplicationUser identityRole = await _roleManager.FindByNameAsync(role);
+                    IdentityRole identityRole = await _roleManager.FindByNameAsync(role);
 
                     if (identityRole != null)
                     {
