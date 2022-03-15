@@ -1,4 +1,6 @@
-﻿using GeekShooping.Web.Models;
+﻿using System.Net.Http.Headers;
+
+using GeekShooping.Web.Models;
 using GeekShooping.Web.Services.Interfaces;
 using GeekShooping.Web.Utils;
 
@@ -14,20 +16,23 @@ public class ProductService : IProductService
         _client = client;
     }
 
-    public async Task<IEnumerable<ProductViewModel>> FindAllProducts()
+    public async Task<IEnumerable<ProductViewModel>> FindAllProducts(string token)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         var response = await _client.GetAsync(BasePath);
         return await response.ReadContentAs<IEnumerable<ProductViewModel>>();
     }
 
-    public async Task<ProductViewModel> FindProductById(Guid id)
+    public async Task<ProductViewModel> FindProductById(Guid id, string token)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         var response = await _client.GetAsync($"{BasePath}/{id}");
         return await response.ReadContentAs<ProductViewModel>();
     }
 
-    public async Task<ProductViewModel> CreateProduct(ProductViewModel viewModel)
+    public async Task<ProductViewModel> CreateProduct(ProductViewModel viewModel, string token)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         var response = await _client.PostAsJson(BasePath, viewModel);
 
         if (response.IsSuccessStatusCode)
@@ -40,8 +45,9 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<ProductViewModel> UpdateProduct(Guid id, ProductViewModel viewModel)
+    public async Task<ProductViewModel> UpdateProduct(Guid id, ProductViewModel viewModel, string token)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         var response = await _client.PutAsJson($"{BasePath}/{id}", viewModel);
 
         if (response.IsSuccessStatusCode)
@@ -54,8 +60,9 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<bool> DeleteProductById(Guid id)
+    public async Task<bool> DeleteProductById(Guid id, string token)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         var response = await _client.DeleteAsync($"{BasePath}/{id}");
         
         if (response.IsSuccessStatusCode)
