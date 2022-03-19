@@ -28,6 +28,14 @@ public class HomeController : Controller
         var products = await _productService.FindAllProducts(token);
         return View(products);
     }
+    
+    [Authorize]
+    public async Task<IActionResult> Details(Guid id)
+    {
+        var token = await HttpContext.GetTokenAsync("access_token");
+        var model = await _productService.FindProductById(id, token);
+        return View(model);
+    }
 
     public IActionResult Privacy()
     {
