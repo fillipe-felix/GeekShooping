@@ -24,8 +24,8 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var token = await HttpContext.GetTokenAsync("access_token");
-        var products = await _productService.FindAllProducts(token);
+        //var token = await HttpContext.GetTokenAsync("access_token");
+        var products = await _productService.FindAllProducts("");
         return View(products);
     }
     
