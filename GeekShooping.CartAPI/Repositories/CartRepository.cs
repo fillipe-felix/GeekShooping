@@ -29,6 +29,7 @@ public class CartRepository : ICartRepository
     {
         Cart cart = _mapper.Map<Cart>(cartViewModel);
 
+        // Check if the product is already saved in the database if it does not exist then save
         var product = await _cartApiContext.Products
             .FirstOrDefaultAsync(p => p.Id == cartViewModel.CartDetails.FirstOrDefault().ProductId);
 
@@ -54,6 +55,36 @@ public class CartRepository : ICartRepository
             _cartApiContext.CartDetails.Add(cart.CartDetails.FirstOrDefault());
             await _cartApiContext.SaveChangesAsync();
         }
+        else
+        {
+            // If cartHeader is not null
+            // Check is CArtDetails has same product
+            var cartDetail = await _cartApiContext.CartDetails
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.ProductId == cartViewModel.CartDetails.FirstOrDefault().ProductId 
+                                          && c.CartHeaderId == cartHeader.Id);
+
+            if (cartDetail == null)
+            {
+                // Create cartDetails
+                cart.CartDetails.FirstOrDefault().CartHeaderId = cart.CartHeader.Id;
+                cart.CartDetails.FirstOrDefault().Product = null;
+                _cartApiContext.CartDetails.Add(cart.CartDetails.FirstOrDefault());
+                await _cartApiContext.SaveChangesAsync();
+            }
+            else
+            {
+                // Update product count and cartDetails
+                cart.CartDetails.FirstOrDefault().Product = null;
+                cart.CartDetails.FirstOrDefault().Count += cartDetail.Count;
+                cart.CartDetails.FirstOrDefault().Id = cartDetail.Id;
+                cart.CartDetails.FirstOrDefault().CartHeaderId = cartDetail.CartHeaderId;
+                _cartApiContext.CartDetails.Update(cart.CartDetails.FirstOrDefault());
+                await _cartApiContext.SaveChangesAsync();
+            }
+        }
+
+        return _mapper.Map<CartViewModel>(cart);
     }
 
     public async Task<bool> RemoveFromCart(Guid cartDetailsId)
