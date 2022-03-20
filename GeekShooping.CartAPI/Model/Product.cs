@@ -6,8 +6,17 @@ using GeekShooping.CartAPI.Model.Base;
 namespace GeekShooping.CartAPI.Model;
 
 [Table("product")]
-public class Product : BaseEntity
+public class Product
 {
+    protected Product()
+    {
+        Id = Guid.NewGuid();
+    }
+
+    [Key]
+    [Column("id")]
+    public Guid Id { get; set; }
+    
     [Column("name")]
     [Required]
     [StringLength(150)]
