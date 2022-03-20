@@ -8,7 +8,7 @@ namespace GeekShooping.CartAPI.Model;
 public class CartHeader : BaseEntity
 {
     [Column("user_id")]
-    public string UserId { get; set; }
+    public Guid UserId { get; set; }
 
     [Column("coupon_code")]
     public string CouponCode { get; set; }

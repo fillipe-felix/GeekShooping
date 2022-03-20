@@ -22,7 +22,17 @@ public class CartRepository : ICartRepository
 
     public async Task<CartViewModel> FindCartByUserId(Guid userId)
     {
-        throw new NotImplementedException();
+        Cart cart = new Cart
+        {
+            CartHeader = await _cartApiContext.CartHeaders.FirstOrDefaultAsync(c => c.UserId == userId),
+            
+        };
+
+        cart.CartDetails = _cartApiContext.CartDetails
+            .Where(c => c.CartHeaderId == cart.CartHeader.Id)
+            .Include(c => c.Product);
+        
+        return _mapper.Map<CartViewModel>(cart);
     }
 
     public async Task<CartViewModel> SaveOrUpdateCart(CartViewModel cartViewModel)
