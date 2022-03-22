@@ -99,7 +99,28 @@ public class CartRepository : ICartRepository
 
     public async Task<bool> RemoveFromCart(Guid cartDetailsId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            CartDetail cartDetail = await _cartApiContext.CartDetails.FirstOrDefaultAsync(c => c.Id == cartDetailsId);
+
+            int total = _cartApiContext.CartDetails.Where(c => c.CartHeaderId == cartDetail.CartHeaderId).Count();
+
+            _cartApiContext.CartDetails.Remove(cartDetail);
+
+            if (total == 1)
+            {
+                var cartHeaderToRemove = await _cartApiContext.CartHeaders.FirstOrDefaultAsync(c => c.Id == cartDetail.CartHeaderId);
+                _cartApiContext.CartHeaders.Remove(cartHeaderToRemove);
+            }
+
+            await _cartApiContext.SaveChangesAsync();
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
     public async Task<bool> ApplyCoupon(Guid userId, string couponCode)
