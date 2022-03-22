@@ -135,6 +135,19 @@ public class CartRepository : ICartRepository
 
     public async Task<bool> ClearCart(Guid userId)
     {
-        throw new NotImplementedException();
+        var cartHeader = await _cartApiContext.CartHeaders.FirstOrDefaultAsync(c => c.UserId == userId);
+
+        if (cartHeader != null)
+        {
+            _cartApiContext.CartDetails
+                .RemoveRange(_cartApiContext.CartDetails.Where(c => c.CartHeaderId == cartHeader.Id));
+
+            _cartApiContext.CartHeaders.Remove(cartHeader);
+            await _cartApiContext.SaveChangesAsync();
+            
+            return true;
+        }
+
+        return false;
     }
 }
