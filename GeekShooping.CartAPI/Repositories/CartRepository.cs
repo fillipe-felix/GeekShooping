@@ -71,13 +71,13 @@ public class CartRepository : ICartRepository
             // Check is CArtDetails has same product
             var cartDetail = await _cartApiContext.CartDetails
                 .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.ProductId == cartViewModel.CartDetails.FirstOrDefault().ProductId 
+                .FirstOrDefaultAsync(c => c.ProductId == cart.CartDetails.FirstOrDefault().ProductId 
                                           && c.CartHeaderId == cartHeader.Id);
 
             if (cartDetail == null)
             {
                 // Create cartDetails
-                cart.CartDetails.FirstOrDefault().CartHeaderId = cart.CartHeader.Id;
+                cart.CartDetails.FirstOrDefault().CartHeaderId = cartHeader.Id;
                 cart.CartDetails.FirstOrDefault().Product = null;
                 _cartApiContext.CartDetails.Add(cart.CartDetails.FirstOrDefault());
                 await _cartApiContext.SaveChangesAsync();
