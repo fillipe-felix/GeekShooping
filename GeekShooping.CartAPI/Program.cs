@@ -1,4 +1,6 @@
 using GeekShooping.CartAPI.Model.Context;
+using GeekShooping.CartAPI.Repositories;
+using GeekShooping.CartAPI.Repositories.Interfaces;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -62,6 +64,8 @@ builder.Services.AddAuthentication("Bearer")
             ValidateAudience = false
         };
     });
+
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 
 builder.Services.AddAuthorization(options =>
 {
