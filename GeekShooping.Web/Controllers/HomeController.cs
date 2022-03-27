@@ -48,7 +48,7 @@ public class HomeController : Controller
         var token = await HttpContext.GetTokenAsync("access_token");
         CartViewModel cart = new CartViewModel
         {
-            CartHeaderViewModel = new CartHeaderViewModel
+            CartHeader = new CartHeaderViewModel
             {
                 UserId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value
             }
@@ -58,11 +58,13 @@ public class HomeController : Controller
         {
             Count = model.Count,
             ProductId = model.Id,
-            ProductViewModel = await _productService.FindProductById(model.Id, token)
+            Product = await _productService.FindProductById(model.Id, token),
+            CartHeader = cart.CartHeader
         };
 
         List<CartDetailViewModel> cartDetais = new List<CartDetailViewModel>();
         cartDetais.Add(cartDetail);
+        cart.CartDetails = cartDetais;
 
         var response = await _cartService.AddItemToCart(cart, token);
 

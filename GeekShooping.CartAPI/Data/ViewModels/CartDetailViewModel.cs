@@ -11,11 +11,11 @@ public class CartDetailViewModel
     
     public Guid CartHeaderId { get; set; }
     
-    public CartHeaderViewModel CartHeaderViewModel { get; set; }
+    public CartHeaderViewModel CartHeader { get; set; }
     
     public Guid ProductId { get; set; }
     
-    public ProductViewModel ProductViewModel { get; set; }
+    public ProductViewModel Product { get; set; }
     
     public int Count { get; set; }
     

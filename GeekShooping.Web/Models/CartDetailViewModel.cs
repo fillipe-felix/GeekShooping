@@ -1,19 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace GeekShooping.Web.Models;
 
-namespace GeekShooping.Web.Models;
-
-[Table("cart_detail")]
 public class CartDetailViewModel
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     
-    public Guid CartHeaderId { get; set; }
+    public Guid CartHeaderId { get; set; } = Guid.NewGuid();
     
-    public CartHeaderViewModel CartHeaderViewModel { get; set; }
+    public CartHeaderViewModel CartHeader { get; set; }
     
     public Guid ProductId { get; set; }
     
-    public ProductViewModel ProductViewModel { get; set; }
+    public ProductViewModel Product { get; set; }
     
     public int Count { get; set; }
     

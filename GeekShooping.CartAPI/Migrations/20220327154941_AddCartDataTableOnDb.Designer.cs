@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeekShooping.CartAPI.Migrations
 {
     [DbContext(typeof(CartApiContext))]
-    [Migration("20220320150540_AddCartDataTableOnDb")]
+    [Migration("20220327154941_AddCartDataTableOnDb")]
     partial class AddCartDataTableOnDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,13 +58,11 @@ namespace GeekShooping.CartAPI.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("CouponCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("coupon_code");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");

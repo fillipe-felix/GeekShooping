@@ -10,7 +10,7 @@ public abstract class BaseEntity
         Id = Guid.NewGuid();
     }
 
-    [Key]
+    
     [Column("id")]
     public Guid Id { get; set; }
 }

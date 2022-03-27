@@ -14,8 +14,8 @@ namespace GeekShooping.CartAPI.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    user_id = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    coupon_code = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    user_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    coupon_code = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
