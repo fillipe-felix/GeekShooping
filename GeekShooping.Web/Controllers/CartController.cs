@@ -50,7 +50,7 @@ namespace GeekShooping.Web.Controllers
             {
                 foreach (var detail in response.CartDetails)
                 {
-                    response.CartHeader.PurchaseAmount += (double)(detail.Product.Price * detail.Count);
+                    response.CartHeader.PurchaseAmount += (detail.Product.Price * detail.Count);
                 }
             }
             return response;
