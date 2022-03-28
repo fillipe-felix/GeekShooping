@@ -8,5 +8,5 @@ public class CouponApiContext : DbContext
     {
     }
 
-    public DbSet<Product> Products { get; set; }
+    public DbSet<Coupon> Coupons { get; set; }
 }

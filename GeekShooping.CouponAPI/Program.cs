@@ -63,7 +63,7 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
-builder.Services.AddScoped<ICouponRepository, CouponRepository>();
+//builder.Services.AddScoped<ICouponRepository, CouponRepository>();
 
 builder.Services.AddAuthorization(options =>
 {
