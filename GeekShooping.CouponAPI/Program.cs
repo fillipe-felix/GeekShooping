@@ -1,4 +1,5 @@
 using GeekShooping.CouponAPI.Model.Context;
+using GeekShooping.CouponAPI.Repository;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -63,7 +64,7 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
-//builder.Services.AddScoped<ICouponRepository, CouponRepository>();
+builder.Services.AddScoped<ICouponRepository, CouponRepository>();
 
 builder.Services.AddAuthorization(options =>
 {

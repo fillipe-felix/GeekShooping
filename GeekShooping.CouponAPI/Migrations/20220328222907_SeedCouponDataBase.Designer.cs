@@ -4,6 +4,7 @@ using GeekShooping.CouponAPI.Model.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeekShooping.CouponAPI.Migrations
 {
     [DbContext(typeof(CouponApiContext))]
-    partial class CouponApiContextModelSnapshot : ModelSnapshot
+    [Migration("20220328222907_SeedCouponDataBase")]
+    partial class SeedCouponDataBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
