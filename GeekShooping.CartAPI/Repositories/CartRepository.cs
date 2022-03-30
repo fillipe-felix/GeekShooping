@@ -24,8 +24,7 @@ public class CartRepository : ICartRepository
     {
         Cart cart = new Cart
         {
-            CartHeader = await _cartApiContext.CartHeaders.FirstOrDefaultAsync(c => c.UserId == userId),
-            
+            CartHeader = await _cartApiContext.CartHeaders.FirstOrDefaultAsync(c => c.UserId == userId) ?? new CartHeader()
         };
 
         cart.CartDetails = _cartApiContext.CartDetails
