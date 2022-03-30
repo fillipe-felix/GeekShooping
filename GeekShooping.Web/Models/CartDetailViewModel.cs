@@ -2,9 +2,9 @@
 
 public class CartDetailViewModel
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }// = Guid.NewGuid();
     
-    public Guid CartHeaderId { get; set; } = Guid.NewGuid();
+    public Guid CartHeaderId { get; set; }// = Guid.NewGuid();
     
     public CartHeaderViewModel CartHeader { get; set; }
     

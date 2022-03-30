@@ -2,11 +2,10 @@
 
 public class CartHeaderViewModel
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
-    
+    public Guid Id { get; set; }// = Guid.NewGuid();
     public string UserId { get; set; }
-    
     public string? CouponCode { get; set; }
-    
     public decimal PurchaseAmount { get; set; }
+    
+    public decimal DiscountAmount { get; set; }
 }
