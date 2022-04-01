@@ -73,6 +73,12 @@ namespace GeekShooping.Web.Controllers
             }
             return View();
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> Checkout()
+        {
+            return View(await FindUserCart());
+        }
                 
         private async Task<CartViewModel> FindUserCart()
         {
