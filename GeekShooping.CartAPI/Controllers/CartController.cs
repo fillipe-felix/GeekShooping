@@ -69,10 +69,16 @@ namespace GeekShooping.CartAPI.Controllers
         [HttpDelete("checkout")]
         public async Task<ActionResult<CheckoutHeaderViewModel>> Checkout([FromBody] CheckoutHeaderViewModel checkoutHeaderViewModel)
         {
+            if (checkoutHeaderViewModel?.UserId == null)
+            {
+                return BadRequest();
+            }
+            
             var cart = await _repository.FindCartByUserId(Guid.Parse(checkoutHeaderViewModel.UserId));
             if (cart == null) return NotFound();
             
             checkoutHeaderViewModel.CartDetails = cart.CartDetails;
+            checkoutHeaderViewModel.DateTime = DateTime.Now;
             
             //TASK RabbitMQ logic comes here!!!
             
