@@ -70,7 +70,7 @@ namespace GeekShooping.CartAPI.Controllers
             return Ok(status);
         }
         
-        [HttpDelete("checkout")]
+        [HttpPost("checkout")]
         public async Task<ActionResult<CheckoutHeaderViewModel>> Checkout([FromBody] CheckoutHeaderViewModel checkoutHeaderViewModel)
         {
             if (checkoutHeaderViewModel?.UserId == null)

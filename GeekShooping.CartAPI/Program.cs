@@ -1,4 +1,5 @@
 using GeekShooping.CartAPI.Model.Context;
+using GeekShooping.CartAPI.RabbitMQSender;
 using GeekShooping.CartAPI.Repositories;
 using GeekShooping.CartAPI.Repositories.Interfaces;
 
@@ -66,6 +67,7 @@ builder.Services.AddAuthentication("Bearer")
     });
 
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddSingleton<IRabbitMQMessageSender, RabbitMQMessageSender>();
 
 builder.Services.AddAuthorization(options =>
 {

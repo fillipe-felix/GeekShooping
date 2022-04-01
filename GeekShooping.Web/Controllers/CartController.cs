@@ -14,10 +14,12 @@ namespace GeekShooping.Web.Controllers
         private readonly ICouponService _couponService;
 
         public CartController(IProductService productService,
-            ICartService cartService)
+            ICartService cartService,
+            ICouponService couponService)
         {
             _productService = productService;
             _cartService = cartService;
+            _couponService = couponService;
         }
 
         [Authorize]
