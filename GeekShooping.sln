@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekShooping.ProductAPI", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekShooping.IdentityServer", "GeekShooping.IdentityServer\GeekShooping.IdentityServer.csproj", "{8605C5E7-BCCA-4D90-9B9A-E74474904E61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekShooping.CartAPI", "GeekShooping.CartAPI\GeekShooping.CartAPI.csproj", "{235B57C3-0819-4D27-9785-986769412E49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekShopping.CartAPI", "GeekShopping.CartAPI\GeekShopping.CartAPI.csproj", "{235B57C3-0819-4D27-9785-986769412E49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekShooping.CouponAPI", "GeekShooping.CouponAPI\GeekShooping.CouponAPI.csproj", "{A08BA473-6D49-4FB7-A4FC-232D3A245145}"
 EndProject
