@@ -1,7 +1,13 @@
-using GeekShooping.CouponAPI.Model.Context;
-using GeekShooping.CouponAPI.Repository;
+using System.Collections.Generic;
 
+using GeekShopping.CouponAPI.Model.Context;
+using GeekShopping.CouponAPI.Repository;
+
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -14,7 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo {Title = "GeekShooping.CouponAPI", Version = "V1"});
+    c.SwaggerDoc("v1", new OpenApiInfo {Title = "GeekShopping.CouponAPI", Version = "V1"});
     c.EnableAnnotations();
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {

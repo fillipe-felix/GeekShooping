@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace GeekShooping.CouponAPI.Migrations
+namespace GeekShopping.CouponAPI.Migrations
 {
     public partial class SeedCouponDataBase : Migration
     {
@@ -12,12 +11,12 @@ namespace GeekShooping.CouponAPI.Migrations
             migrationBuilder.InsertData(
                 table: "coupon",
                 columns: new[] { "id", "coupon_code", "discount_amount" },
-                values: new object[] { new Guid("50ebf12c-8885-4bab-928d-bae0da212fbc"), "ERUDIO_2022_15", 15m });
+                values: new object[] { 1L, "ERUDIO_2022_10", 10m });
 
             migrationBuilder.InsertData(
                 table: "coupon",
                 columns: new[] { "id", "coupon_code", "discount_amount" },
-                values: new object[] { new Guid("f6404a7b-6fe6-448f-a3fd-994ad9f0332b"), "ERUDIO_2022_10", 10m });
+                values: new object[] { 2L, "ERUDIO_2022_15", 15m });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -25,12 +24,12 @@ namespace GeekShooping.CouponAPI.Migrations
             migrationBuilder.DeleteData(
                 table: "coupon",
                 keyColumn: "id",
-                keyValue: new Guid("50ebf12c-8885-4bab-928d-bae0da212fbc"));
+                keyValue: 1L);
 
             migrationBuilder.DeleteData(
                 table: "coupon",
                 keyColumn: "id",
-                keyValue: new Guid("f6404a7b-6fe6-448f-a3fd-994ad9f0332b"));
+                keyValue: 2L);
         }
     }
 }

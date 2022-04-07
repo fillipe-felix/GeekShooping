@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "GeekShooping.CouponAPI": {
+    "GeekShopping.CouponAPI": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace GeekShooping.CouponAPI.Migrations
+namespace GeekShopping.CouponAPI.Migrations
 {
     public partial class AddCouponDataTablesOnDb : Migration
     {
@@ -13,7 +12,8 @@ namespace GeekShooping.CouponAPI.Migrations
                 name: "coupon",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     coupon_code = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     discount_amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
