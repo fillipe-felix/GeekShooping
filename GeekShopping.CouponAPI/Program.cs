@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 
+using AutoMapper;
+
+using GeekShopping.CouponAPI.Config;
 using GeekShopping.CouponAPI.Model.Context;
 using GeekShopping.CouponAPI.Repository;
 
@@ -56,7 +59,9 @@ builder.Services.AddDbContext<CouponApiContext>(opt =>
     opt.UseSqlServer(connection);
 });
 
-builder.Services.AddAutoMapper(typeof(Program));
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //builder.Services.AddScoped<IProductRepository, ProductRepository>();
 

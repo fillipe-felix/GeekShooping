@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 
+using AutoMapper;
+
+using GeekShopping.CartAPI.Config;
 using GeekShopping.CartAPI.Model.Context;
 using GeekShopping.CartAPI.RabbitMQSender;
 using GeekShopping.CartAPI.Repository;
@@ -57,7 +60,9 @@ builder.Services.AddDbContext<CartApiContext>(opt =>
     opt.UseSqlServer(connection);
 });
 
-builder.Services.AddAutoMapper(typeof(Program));
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
