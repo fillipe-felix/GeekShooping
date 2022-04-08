@@ -64,7 +64,7 @@ namespace GeekShopping.CartAPI.Controllers
         }
 
         [HttpDelete("remove-coupon/{userId}")]
-        public async Task<ActionResult<CartVO>> ApplyCoupon(string userId)
+        public async Task<ActionResult<CartVO>> RemoveCoupon(string userId)
         {
             var status = await _repository.RemoveCoupon(userId);
             if (!status) return NotFound();
@@ -74,7 +74,7 @@ namespace GeekShopping.CartAPI.Controllers
         [HttpPost("checkout")]
         public async Task<ActionResult<CheckoutHeaderVO>> Checkout(CheckoutHeaderVO vo)
         {
-            if (vo?.UserId == null) return BadRequest();
+            if (vo.UserId == null) return BadRequest();
             var cart = await _repository.FindCartByUserId(vo.UserId);
             if (cart == null) return NotFound();
             vo.CartDetails = cart.CartDetails;
