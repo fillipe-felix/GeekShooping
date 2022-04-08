@@ -1,4 +1,5 @@
 using GeekShopping.OrderAPI.Model.Context;
+using GeekShopping.OrderAPI.Repository;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -49,8 +50,10 @@ builder.Services.AddDbContext<OrderApiContext>(opt =>
     opt.UseSqlServer(connection);
 });
 
+var builderContext = new DbContextOptionsBuilder<OrderApiContext>();
+builderContext.UseSqlServer(connection);
 
-//builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton(new OrderRepository(builderContext.Options));
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer",options =>
@@ -62,8 +65,8 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
-// builder.Services.AddScoped<ICartRepository, CartRepository>();
-// builder.Services.AddSingleton<IRabbitMQMessageSender, RabbitMQMessageSender>();
+
+
 
 builder.Services.AddAuthorization(options =>
 {
