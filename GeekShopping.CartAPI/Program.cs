@@ -80,7 +80,7 @@ builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICouponRepository, CouponRepository>();
 
 builder.Services.AddHttpClient<ICouponRepository, CouponRepository>(s => 
-    s.BaseAddress = new Uri(builder.Configuration.GetSection("ServiceUrls:CouponAPI").ToString()));
+    s.BaseAddress = new Uri(builder.Configuration["ServiceUrls:CouponAPI"]));
 
 builder.Services.AddSingleton<IRabbitMQMessageSender, RabbitMQMessageSender>();
 
