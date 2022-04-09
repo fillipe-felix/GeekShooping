@@ -1,4 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using System.Net.Http.Headers;
+using System.Text.Json;
+
+using AutoMapper;
 
 using GeekShopping.CartAPI.Data.ValueObjects;
 
@@ -6,19 +10,28 @@ namespace GeekShopping.CartAPI.Repository
 {
     public class CouponRepository : ICouponRepository
     {
-        private readonly CouponApiContext _context;
-        private IMapper _mapper;
+        private readonly HttpClient _client;
 
-        public CouponRepository(CouponApiContext context, IMapper mapper)
+        public CouponRepository(HttpClient client)
         {
-            _context = context;
-            _mapper = mapper;
+            _client = client;
         }
 
         public async Task<CouponVO> GetCouponByCouponCode(string couponCode, string token)
         {
-            var coupon = await _context.Coupons.FirstOrDefaultAsync(c => c.CouponCode == couponCode);
-            return _mapper.Map<CouponVO>(coupon);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var reponse = await _client.GetAsync($"/api/v1/coupon/{couponCode}");
+            var content = await reponse.Content.ReadAsStreamAsync();
+
+            if (reponse.StatusCode != HttpStatusCode.OK)
+            {
+                return new CouponVO();
+            }
+            
+            return JsonSerializer.Deserialize<CouponVO>(content,
+                new JsonSerializerOptions
+                    {PropertyNameCaseInsensitive = true});
         }
     }
 }
