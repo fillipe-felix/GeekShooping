@@ -1,3 +1,4 @@
+using GeekShopping.OrderAPI.MessageConsumer;
 using GeekShopping.OrderAPI.Model.Context;
 using GeekShopping.OrderAPI.Repository;
 
@@ -54,6 +55,7 @@ var builderContext = new DbContextOptionsBuilder<OrderApiContext>();
 builderContext.UseSqlServer(connection);
 
 builder.Services.AddSingleton(new OrderRepository(builderContext.Options));
+builder.Services.AddHostedService<RabbitMQCheckoutConsumer>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer",options =>
