@@ -25,19 +25,14 @@ public class RabbitMQMessageSender : IRabbitMQMessageSender
 
     public void SendMessage(BaseMessage message, string queueName)
     {
-        var factory = new ConnectionFactory
+        if (ConnectionExists())
         {
-            HostName = _hostName,
-            UserName = _userName,
-            Password = _password
-        };
-        _connection = factory.CreateConnection();
-
-        using var channel = _connection.CreateModel();
-        channel.QueueDeclare(queueName, false, false, false, null);
-        var body = GetMessageAsByteArray(message);
-        channel.BasicPublish(
-            "", queueName, null, body);
+            using var channel = _connection.CreateModel();
+            channel.QueueDeclare(queueName, false, false, false, null);
+            var body = GetMessageAsByteArray(message);
+            channel.BasicPublish(
+                "", queueName, null, body);
+        }
     }
 
     private byte[] GetMessageAsByteArray(BaseMessage message)
@@ -50,4 +45,36 @@ public class RabbitMQMessageSender : IRabbitMQMessageSender
         var body = Encoding.UTF8.GetBytes(json);
         return body;
     }
+
+    private void CreateConnection()
+    {
+        try
+        {
+            var factory = new ConnectionFactory
+            {
+                HostName = _hostName,
+                UserName = _userName,
+                Password = _password
+            };
+            _connection = factory.CreateConnection();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    private bool ConnectionExists()
+    {
+        if (_connection != null)
+        {
+            return true;
+        }
+
+        CreateConnection();
+        return _connection != null;
+    }
+
+    
 }
