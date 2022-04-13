@@ -1,3 +1,6 @@
+using GeekShopping.PaymentAPI.MessageConsumer;
+using GeekShopping.PaymentProcessor;
+
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -39,18 +42,9 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// var connection = builder.Configuration.GetConnectionString("DefaultConnection");
-// builder.Services.AddDbContext<OrderApiContext>(opt =>
-// {
-//     opt.UseSqlServer(connection);
-// });
+builder.Services.AddSingleton<IProcessPayment, ProcessPayment>();
+builder.Services.AddHostedService<RabbitMQPaymentConsumer>();
 
-// var builderContext = new DbContextOptionsBuilder<OrderApiContext>();
-// builderContext.UseSqlServer(connection);
-
-//builder.Services.AddSingleton(new OrderRepository(builderContext.Options));
-//builder.Services.AddHostedService<RabbitMQCheckoutConsumer>();
-//builder.Services.AddSingleton<IRabbitMQMessageSender, RabbitMQMessageSender>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer",options =>
