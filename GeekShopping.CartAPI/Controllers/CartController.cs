@@ -79,7 +79,7 @@ namespace GeekShopping.CartAPI.Controllers
         {
             string token = Request.Headers["Authorization"];
             
-            if (vo.UserId == null) return BadRequest();
+            if (vo?.UserId == null) return BadRequest();
             var cart = await _cartRepository.FindCartByUserId(vo.UserId);
             if (cart == null) return NotFound();
 
@@ -98,6 +98,8 @@ namespace GeekShopping.CartAPI.Controllers
 
             // RabbitMQ logic comes here!!!
             _rabbitMQMessageSender.SendMessage(vo, "checkoutqueue");
+
+            await _cartRepository.ClearCart(vo.UserId);
 
             return Ok(vo);
         }
