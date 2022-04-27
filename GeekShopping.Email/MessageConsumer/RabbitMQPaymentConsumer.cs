@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 
+using GeekShopping.Email.Messages;
 using GeekShopping.Email.Repository;
 
 using RabbitMQ.Client;
@@ -42,9 +43,9 @@ public class RabbitMQPaymentConsumer : BackgroundService
         consumer.Received += (channel, ev) =>
         {
             var content = Encoding.UTF8.GetString(ev.Body.ToArray());
-            UpdatePaymentResultVO vo = JsonSerializer.Deserialize<UpdatePaymentResultVO>(content);
+            UpdatePaymentResultMessage message = JsonSerializer.Deserialize<UpdatePaymentResultMessage>(content);
 
-            UpdatePaymentStatus(vo).GetAwaiter().GetResult();
+            ProcessLogs(message).GetAwaiter().GetResult();
             _channel.BasicAck(ev.DeliveryTag, false);
         };
 
@@ -53,11 +54,11 @@ public class RabbitMQPaymentConsumer : BackgroundService
         return Task.CompletedTask;
     }
 
-    private async Task UpdatePaymentStatus(UpdatePaymentResultVO vo)
+    private async Task ProcessLogs(UpdatePaymentResultMessage message)
     {
         try
         {
-            await _repository.UpdateOrderPaymentStatus(vo.OrderId, vo.Status);
+            await _repository.LogEmail(message);
         }
         catch (Exception e)
         {
