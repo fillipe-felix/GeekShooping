@@ -1,4 +1,6 @@
+using GeekShopping.Email.MessageConsumer;
 using GeekShopping.Email.Model.Context;
+using GeekShopping.Email.Repository;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -50,6 +52,10 @@ builder.Services.AddDbContext<EmailApiContext>(opt =>
 
 var builderContext = new DbContextOptionsBuilder<EmailApiContext>();
 builderContext.UseSqlServer(connection);
+
+builder.Services.AddSingleton(new EmailRepository(builderContext.Options));
+builder.Services.AddScoped<IEmailRepository, EmailRepository>();
+builder.Services.AddHostedService<RabbitMQPaymentConsumer>();
 
 
 builder.Services.AddAuthentication("Bearer")

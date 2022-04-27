@@ -1,7 +1,9 @@
-﻿namespace GeekShopping.Email.Repository
+﻿using GeekShopping.Email.Messages;
+
+namespace GeekShopping.Email.Repository
 {
     public interface IEmailRepository
     {
-        Task UpdateOrderPaymentStatus(long orderHeaderId, bool status);
+        Task LogEmail(UpdatePaymentResultMessage message);
     }
 }

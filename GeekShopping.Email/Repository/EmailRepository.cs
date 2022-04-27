@@ -1,4 +1,6 @@
-﻿using GeekShopping.Email.Model.Context;
+﻿using GeekShopping.Email.Messages;
+using GeekShopping.Email.Model;
+using GeekShopping.Email.Model.Context;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -13,16 +15,19 @@ namespace GeekShopping.Email.Repository
             _context = context;
         }
 
-        public async Task UpdateOrderPaymentStatus(long orderHeaderId, bool status)
+        public async Task LogEmail(UpdatePaymentResultMessage message)
         {
-            await using var _db = new EmailApiContext(_context);
-            var header = await _db.Emails.FirstOrDefaultAsync(o => o.Id == orderHeaderId);
-            
-            if (header != null)
+            EmailLog email = new EmailLog
             {
-                
-                await _db.SaveChangesAsync();
-            }
+                Email = message.Email,
+                SentDate = DateTime.Now,
+                Log = $"Order - {message.OrderId} has been created successfully!"
+            };
+            await using var _db = new EmailApiContext(_context);
+            _db.Emails.Add(email);
+            
+            await _db.SaveChangesAsync();
+            
         }
     }
 }
