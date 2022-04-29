@@ -16,8 +16,8 @@ public class RabbitMQMessageSender : IRabbitMQMessageSender
     private readonly string _userName;
     private IConnection _connection;
     private const string EXCHANGE_NAME = "DirectPaymentUpdateExchange";
-    private const string PAYMENT_EMAIL_UPDATE_QUEUE_NAME = "DirectEmailUpdateExchange";
-    private const string PAYMENT_ORDER_UPDATE_QUEUE_NAME = "DirectOrderUpdateExchange";
+    private const string PAYMENT_EMAIL_UPDATE_QUEUE_NAME = "PaymentEmailUpdateExchange";
+    private const string PAYMENT_ORDER_UPDATE_QUEUE_NAME = "PaymentOrderUpdateExchange";
 
     public RabbitMQMessageSender()
     {
