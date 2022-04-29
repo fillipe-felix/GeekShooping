@@ -14,7 +14,7 @@ public class RabbitMQPaymentConsumer : BackgroundService
     private readonly EmailRepository _repository;
     private IConnection _connection;
     private IModel _channel;
-    private const string EXCHANGE_NAME = "FanoutPaymentUpdateExchange";
+    private const string EXCHANGE_NAME = "DirectPaymentUpdateExchange";
     private string queueName = "";
 
     public RabbitMQPaymentConsumer(EmailRepository repository)

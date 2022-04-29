@@ -15,7 +15,9 @@ public class RabbitMQMessageSender : IRabbitMQMessageSender
     private readonly string _password;
     private readonly string _userName;
     private IConnection _connection;
-    private const string EXCHANGE_NAME = "FanoutPaymentUpdateExchange";
+    private const string EXCHANGE_NAME = "DirectPaymentUpdateExchange";
+    private const string PAYMENT_EMAIL_UPDATE_QUEUE_NAME = "DirectEmailUpdateExchange";
+    private const string PAYMENT_ORDER_UPDATE_QUEUE_NAME = "DirectOrderUpdateExchange";
 
     public RabbitMQMessageSender()
     {
@@ -29,10 +31,18 @@ public class RabbitMQMessageSender : IRabbitMQMessageSender
         if (ConnectionExists())
         {
             using var channel = _connection.CreateModel();
-            channel.ExchangeDeclare(EXCHANGE_NAME, ExchangeType.Fanout, durable: false);
+            channel.ExchangeDeclare(EXCHANGE_NAME, ExchangeType.Direct, durable: false);
+            channel.QueueDeclare(PAYMENT_EMAIL_UPDATE_QUEUE_NAME, false, false, false, null);
+            channel.QueueDeclare(PAYMENT_ORDER_UPDATE_QUEUE_NAME, false, false, false, null);
+            
+            channel.QueueBind(PAYMENT_EMAIL_UPDATE_QUEUE_NAME, EXCHANGE_NAME, "PaymentEmail");
+            channel.QueueBind(PAYMENT_ORDER_UPDATE_QUEUE_NAME, EXCHANGE_NAME, "PaymentOrder");
             var body = GetMessageAsByteArray(message);
             channel.BasicPublish(
-                EXCHANGE_NAME, "", null, body);
+                EXCHANGE_NAME, "PaymentEmail", null, body);
+            
+            channel.BasicPublish(
+                EXCHANGE_NAME, "PaymentOrder", null, body);
         }
     }
 
